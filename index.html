@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<!--
+  ASDA 一键安装 Chrome 扩展的隐私政策。
+
+  部署：本文件是规范副本；线上部署副本在 csdkhub 仓库 apps/web/public/chrome-extension-privacy.html
+  （随 csdkhub 构建上线，NestJS SpaController 按带扩展名路径直出）。
+  线上地址：https://uav-csdk.insta360.cn/chrome-extension-privacy.html（.html 后缀必须带，
+  无后缀会命中 csdkhub 的 SPA fallback 打开其首页而非本页）。
+
+  使用方：
+    · Chrome 应用商店开发者后台的「Privacy policy URL」字段（审核员在外网打开，所以必须公网可达）
+    · 扩展 popup 底部的「隐私政策」入口（地址在 resources/chrome-extension/src/deeplink.js 的
+      PRIVACY_POLICY_URL，改地址三处一起改）
+
+  维护约束：本页内容必须与扩展的**真实行为**一致——商店政策明确要求「后台声明 / 隐私政策 / 实际行为」
+  三者一致，不一致属于违规。改动扩展的网络请求、权限或存储行为时同步改本页。
+-->
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASDA 一键安装 Chrome 扩展 · 隐私政策</title>
+<link rel="icon" href="/joint-debug/icon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f4f6fa; color: #1f2740; padding: 40px 24px; line-height: 1.75;
+  }
+  main { max-width: 760px; margin: 0 auto; background: #fff; border-radius: 12px;
+         padding: 40px 36px; box-shadow: 0 2px 12px rgba(31,39,64,.08); }
+  h1 { font-size: 22px; margin-bottom: 6px; }
+  .meta { font-size: 13px; color: #86909c; margin-bottom: 24px; }
+  h2 { font-size: 16px; margin: 26px 0 8px; }
+  p, li { font-size: 14px; color: #2b3348; }
+  ul { margin: 8px 0 0 20px; }
+  li { margin-bottom: 6px; }
+  code { background: #f2f3f5; border-radius: 4px; padding: 1px 5px; font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+  th, td { border: 1px solid #e5e6eb; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f7f8fa; font-weight: 600; }
+  .note { margin-top: 10px; padding: 10px 12px; border-radius: 8px; background: #f7f8fa;
+          font-size: 13px; color: #4e5969; }
+  footer { margin-top: 30px; padding-top: 16px; border-top: 1px solid #e5e6eb;
+           font-size: 13px; color: #86909c; }
+</style>
+</head>
+<body>
+<main>
+  <h1>ASDA 一键安装 Chrome 扩展 · 隐私政策</h1>
+  <div class="meta">生效日期：2026-09-28 &nbsp;|&nbsp; 最后更新：2026-09-28</div>
+
+  <p>本政策适用于「ASDA 一键安装」Chrome 扩展（下称「本扩展」）。ASDA 桌面端应用是另一个独立产品，
+     其数据处理方式以该产品自身的说明为准，不在本政策范围内。</p>
+
+  <h2>一、本扩展做什么</h2>
+  <p>本扩展是一个面向 Insta360 内部研发流程的效率工具，只做三件事：</p>
+  <ul>
+    <li>在 Insta360 内部站点（<code>*.insta360.cn</code>、<code>*.insta360.com</code>，如内部的制品库、构建平台、
+        Jira）上识别以 <code>.apk</code> / <code>.ipa</code> / <code>.fw</code> 结尾的下载链接，
+        给它们加上一个小角标，点击时弹窗提供「拉起 ASDA 安装 / 下载到本地 / 转成可分享的链接」三个选项；</li>
+    <li>提供一个工具栏面板，可以把你手上的一条制品链接交给 ASDA 或转成分享链接；</li>
+    <li>在 Jira 需求单页面显示一张「联调交付」卡片，列出该单已关联的联调交付单。</li>
+  </ul>
+
+  <h2>二、我们不做的事</h2>
+  <ul>
+    <li>不收集你的姓名、邮箱、账号、手机号等任何身份信息，本扩展没有登录、没有用户体系；</li>
+    <li>不记录、不存储、不外传你的浏览历史与页面内容；</li>
+    <li>不做埋点统计、不做广告、不做用户画像，不把任何数据用于广告投放或信用评估；</li>
+    <li>不向任何第三方出售、出租或共享数据；</li>
+    <li>不加载、不执行任何远程下发的代码——扩展的所有逻辑都随安装包一起分发。</li>
+  </ul>
+
+  <h2>三、本扩展处理哪些数据、怎么用</h2>
+  <table>
+    <tr><th>数据</th><th>用途</th><th>是否离开你的设备</th></tr>
+    <tr>
+      <td>网页中下载链接的地址与文件名</td>
+      <td>判断是否为安装包、给链接加角标；你点击「一键安装 / 转链」时才把该地址交给 ASDA 或被复制到剪贴板</td>
+      <td>否（仅在你本机处理）</td>
+    </tr>
+    <tr>
+      <td>你当前所在标签页的地址</td>
+      <td>打开工具栏面板时作为默认输入，以及「提交联调版本」时把你所在页面地址带过去</td>
+      <td>仅在你主动点「提交联调版本」时发往公司自建的联调交付服务</td>
+    </tr>
+    <tr>
+      <td>Jira 单号、Jira 单页上的关联信息（remote link）</td>
+      <td>渲染 Jira 单页的「联调交付」卡片</td>
+      <td>读取请求发往 <code>jira.insta360.com</code>（公司自建 Jira），使用你浏览器里已有的登录态</td>
+    </tr>
+    <tr>
+      <td>本扩展的版本号</td>
+      <td>请求联调交付服务时附带，用于提示你扩展是否为最新版本</td>
+      <td>发往联调交付服务（默认为 <code>uav-asda.insta360.cn</code>，可在扩展面板里改成其它地址）</td>
+    </tr>
+  </table>
+  <div class="note">
+    说明：读取 Jira 关联信息时，本扩展只是带着你浏览器里已有的会话发起只读请求，
+    <strong>不读取、不获取、不保存任何登录凭据或访问令牌</strong>，也不会对 Jira 做任何写入操作。
+  </div>
+
+  <h2>四、数据会发往哪里</h2>
+  <p>本扩展只与 Insta360 自建的服务通信，不接入任何第三方服务、统计平台或广告网络：</p>
+  <ul>
+    <li><code>https://uav-asda.insta360.cn</code> —— 联调交付平台：查询扩展版本与卡片内容。
+        该地址可在扩展面板里改成你自己的地址（例如本机调试用的 <code>http://127.0.0.1:2732</code>），
+        改成什么，这些请求就只发往什么地址；</li>
+    <li><code>https://jira.insta360.com</code> —— 只读查询当前 Jira 单的关联信息。</li>
+  </ul>
+  <p>上述请求不包含你的页面内容、浏览历史或任何身份信息；服务端可能按常规方式记录访问日志（如 IP、
+     请求时间），用于故障排查与安全审计。</p>
+
+  <h2>五、数据存在哪里、怎么删除</h2>
+  <p>本扩展只在本机浏览器内保存两项设置：角标开关状态、你手填的联调服务地址。它们存放在浏览器的
+     <code>chrome.storage.local</code> 中，不上传。</p>
+  <p>删除方式：卸载本扩展，或在浏览器设置中清除扩展数据，这些记录即被删除。卸载后本扩展不再处理任何数据。</p>
+
+  <h2>六、权限与用途的对应关系</h2>
+  <table>
+    <tr><th>权限</th><th>为什么需要</th></tr>
+    <tr><td><code>activeTab</code></td><td>你点开扩展图标时读取当前标签页地址，作为面板默认输入</td></tr>
+    <tr><td><code>downloads</code></td><td>面板里的「下载到本地」按钮（跨域下载只能走该接口）</td></tr>
+    <tr><td><code>storage</code></td><td>记住角标开关与联调服务地址</td></tr>
+    <tr><td>访问 <code>uav-asda.insta360.cn</code> / <code>jira.insta360.com</code> / <code>127.0.0.1</code></td>
+        <td>向联调交付平台查询卡片内容、只读读取当前 Jira 单的关联信息；<code>127.0.0.1</code> 是给
+            在本机起了联调服务的用户用的（你在面板里填了本机地址时才会用到）</td></tr>
+    <tr><td>在 Insta360 内部站点（<code>*.insta360.cn</code>、<code>*.insta360.com</code>）与
+        <code>127.0.0.1</code> 上运行内容脚本</td>
+        <td>本扩展的工作方式就是「在这些站点上找出安装包链接」，所以需要注入内容脚本；
+            脚本只读取链接地址用于匹配，不上传页面内容，<strong>不会在你访问的其它网站上运行</strong></td></tr>
+  </table>
+
+  <h2>七、儿童</h2>
+  <p>本扩展面向企业研发人员，不面向儿童，也不会主动收集儿童的信息。</p>
+
+  <h2>八、政策变更</h2>
+  <p>本扩展功能或数据处理方式发生变化时，我们会同步更新本页内容与页首的「最后更新」日期。
+     建议你定期回来查看。</p>
+
+  <h2>九、联系方式</h2>
+  <p>对本政策或本扩展的数据处理方式有疑问，请联系
+     <a href="mailto:asda-team@insta360.com">asda-team@insta360.com</a>。</p>
+
+  <footer>ASDA 一键安装 Chrome 扩展 · 隐私政策</footer>
+</main>
+</body>
+</html>
