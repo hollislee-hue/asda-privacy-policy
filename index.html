@@ -3,15 +3,17 @@
 <!--
   ASDA 一键安装 Chrome 扩展的隐私政策。
 
-  部署：本文件是规范副本；线上部署副本在 csdkhub 仓库 apps/web/public/chrome-extension-privacy.html
-  （随 csdkhub 构建上线，NestJS SpaController 按带扩展名路径直出）。
-  线上地址：https://uav-csdk.insta360.cn/chrome-extension-privacy.html（.html 后缀必须带，
-  无后缀会命中 csdkhub 的 SPA fallback 打开其首页而非本页）。
+  部署：本文件是**唯一源文件**，发布到 GitHub Pages（审核员在公司网络外，所以必须公网可达）：
+    仓库  https://github.com/hollislee-hue/asda-privacy-policy   （必须是公开仓库）
+    线上  https://hollislee-hue.github.io/asda-privacy-policy/
+  发布：./script/publish_privacy_policy.sh git@github.com:hollislee-hue/asda-privacy-policy.git
+  （脚本把本文件同步成目标仓库根目录的 index.html，所以线上地址不用带 .html 后缀；改完重跑即可。
+    首次要在仓库 Settings → Pages 开启 Deploy from a branch + main / (root)。）
 
   使用方：
-    · Chrome 应用商店开发者后台的「Privacy policy URL」字段（审核员在外网打开，所以必须公网可达）
+    · Chrome 应用商店开发者后台的「Privacy policy URL」字段
     · 扩展 popup 底部的「隐私政策」入口（地址在 resources/chrome-extension/src/deeplink.js 的
-      PRIVACY_POLICY_URL，改地址三处一起改）
+      PRIVACY_POLICY_URL，换地址要跟这里、发布脚本、商店后台一起改）
 
   维护约束：本页内容必须与扩展的**真实行为**一致——商店政策明确要求「后台声明 / 隐私政策 / 实际行为」
   三者一致，不一致属于违规。改动扩展的网络请求、权限或存储行为时同步改本页。
